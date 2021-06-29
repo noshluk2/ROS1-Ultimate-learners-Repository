@@ -1,0 +1,14 @@
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+arm1_a_position_controller:
+    type: position_controllers/JointPositionController
+    joint: arm1_a_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+arm1_b_position_controller:
+      type: position_controllers/JointPositionController
+      joint: arm1_b_joint
+      pid: {p: 100.0, i: 0.1, d: 0.0}
+
+

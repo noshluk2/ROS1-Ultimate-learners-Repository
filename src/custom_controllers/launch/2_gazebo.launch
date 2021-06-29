@@ -1,0 +1,11 @@
+<launch>
+<!-- Gazebo launching -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+    <arg name="model" default="$(find custom_controllers)/urdf/dual_arm.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+      args="-urdf -model dual_arm -param robot_description"/>
+  
+  </launch>

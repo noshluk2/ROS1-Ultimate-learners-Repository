@@ -1,0 +1,214 @@
+<robot name="dual_arm">
+    <link name="world"/>
+
+    <link name="base">
+        <inertial>
+          <mass value="20"/>
+          <inertia ixx="3" ixy="0" ixz="0" iyy="3" iyz="0" izz="0.3" />
+          <origin/>
+        </inertial>
+    
+        <visual>
+            <origin xyz="0 0 0.15" rpy="0 0 0" />
+          <geometry>
+            <box size="3 3 0.3"/>
+          </geometry>
+          <material name="white">
+            <color rgba="1 1 1 1"/>
+          </material>
+        </visual>
+    
+        <collision>
+            <origin xyz="0 0 0.15" rpy="0 0 0" />
+          <geometry>
+            <box size="3 3 0.3"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="base_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base"/>
+      </joint>
+<!-- ////////////////////////////////////////// -->
+<link name="pillar">
+
+      <inertial>
+          <mass value="10"/>
+          <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.4" iyz="0" izz="0.8" />
+          <origin/>
+        </inertial>
+
+    <visual>
+        <geometry>
+            <box size="0.4 0.4 3"/>
+        </geometry>
+        <material name="gray">
+          <color rgba=".2 .2 .2 1" />
+        </material>
+      </visual>
+  
+      <collision>
+        <geometry>
+            <box size="0.4 0.4 3"/>
+        </geometry>
+      </collision>
+    </link>
+  
+    <joint name="pillar_joint" type="fixed">
+      <parent link="base"/>
+      <child link="pillar"/>
+
+      <origin xyz="0 0 1.65" rpy="0 0.0 0.0"/>
+    </joint>
+  <!-- ////////////////////////////////////////// -->
+    <link name="arm_holder">
+        <inertial>
+          <mass value="10"/>
+          <inertia ixx="1" ixy="0" ixz="0" iyy="2.5" iyz="0" izz="0.5" />
+          <origin/>
+        </inertial>
+    
+        <visual>
+          <geometry>
+            <box size="1 2.5 0.5"/>
+          </geometry>
+          <material name="white">
+            <color rgba="1 0 0 1"/>
+          </material>
+        </visual>
+
+        <collision>
+          <geometry>
+            <box size="1 2.5 0.5"/>
+          </geometry>
+          <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+        </collision>
+
+      </link>
+
+      <joint name="arm_holder_joint" type="fixed">
+        <parent link="pillar"/>
+        <child link="arm_holder"/>
+        <origin xyz="0 0 1.6" rpy="0 0.0 0.0"/>
+      </joint>
+  <!-- ////////////////////////////////////////// -->
+    <!-- ////////////////////////////////////////// -->
+
+    <link name="arm1_a">
+        <inertial>
+          <mass value="3"/>
+          <inertia ixx="0.4" ixy="0" ixz="0" iyy="1.5" iyz="0" izz="0.2" />
+          <origin/>
+        </inertial>
+    
+        <visual>
+            <origin xyz="0 -0.5 0" rpy="0 0.0 0.0"/>
+          <geometry>
+            <box size="0.4 1.5 0.2"/>
+          </geometry>
+          <material name="white">
+            <color rgba="1 0 0 1"/>
+          </material>
+        </visual>
+
+        <collision>
+          <origin xyz="0 -0.5 0" rpy="0 0.0 0.0"/>
+          <geometry>
+            <box size="0.4 1.5 0.2"/>
+          </geometry>
+          <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+        </collision>
+
+      </link>
+
+      <joint name="arm1_a_joint" type="continuous">
+        <parent link="arm_holder"/>
+        <child link="arm1_a"/>
+        <origin xyz="0 1.36 0" rpy="1.57 0.0 0.0"/>
+        <axis  xyz="0 0 1" />
+      </joint>
+
+      <link name="arm1_b">
+        <inertial>
+          <mass value="2"/>
+          <inertia ixx="0.3" ixy="0" ixz="0" iyy="1.5" iyz="0" izz="0.2" />
+          <origin/>
+        </inertial>
+    
+        <visual>
+            <origin xyz="0 -0.5 0" rpy="0 0.0 0.0"/>
+          <geometry>
+            <box size="0.3 1.5 0.2"/>
+          </geometry>
+          <material name="black">
+            <color rgba="0 0 0 1"/>
+          </material>
+        </visual>
+
+        <collision>
+          <origin xyz="0 -0.5 0" rpy="0 0.0 0.0"/>
+          <geometry>
+            <box size="0.3 1.5 0.2"/>
+          </geometry>
+          <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+        </collision>
+
+      </link>
+
+      <joint name="arm1_b_joint" type="continuous">
+        <parent link="arm1_a"/>
+        <child link="arm1_b"/>
+        <axis   xyz="0 0 1" />
+        <origin xyz="0 -1.2 -0.25" rpy="0 0.0 0.0"/>
+      </joint>
+
+
+    <!-- ////////////////////////////////////////// -->
+
+ 
+
+  <transmission name="transmission_arm1_a">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm1_a_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_arm_1_a">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="transmission_arm1_b">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm1_b_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_arm_1_b">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+<!-- adding colors for gazebo simulaltion  -->
+<gazebo reference="base">
+  <material>Gazebo/Black</material>
+</gazebo>
+<gazebo reference="pillar">
+  <material>Gazebo/White</material>
+</gazebo>
+<gazebo reference="arm_holder">
+  <material>Gazebo/Orange</material>
+</gazebo>
+<gazebo reference="arm1_a">
+  <material>Gazebo/Yellow</material>
+</gazebo>
+<gazebo reference="arm1_b">
+  <material>Gazebo/Blue</material>
+</gazebo>
+</robot>
