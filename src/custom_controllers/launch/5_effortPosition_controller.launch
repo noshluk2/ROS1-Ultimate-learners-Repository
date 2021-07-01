@@ -1,0 +1,16 @@
+<launch>
+<!-- Controller launching -->
+<rosparam file="$(find custom_controllers)/config/3_effortPosition_controller.yaml" command="load"/>
+
+<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="joint_state_controller  
+                          arm1_a_effortPosition_controller
+                          arm1_b_effortPosition_controller    "/>
+  
+    <!-- Joint States of robot to Transforms ( TF )-->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+    <remap from="/joint_states" to="/rrbot/joint_states" />
+  </node>
+
+</launch>

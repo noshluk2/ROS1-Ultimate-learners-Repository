@@ -1,0 +1,16 @@
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+arm1_a_effortVelocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: arm1_a_joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+    
+arm1_b_effortVelocity_controller:
+      type: effort_controllers/JointVelocityController
+      joint: arm1_b_joint
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+      
+
+

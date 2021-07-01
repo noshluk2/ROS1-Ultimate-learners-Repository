@@ -1,0 +1,14 @@
+<launch>
+    <!-- Controller launching -->
+    <rosparam file="$(find custom_controllers)/config/5_group_controllers.yaml" command="load"/>
+    
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller  arm1_position_interface arm2_velocity_interface   "/>
+      
+        <!-- Joint States of robot to Transforms ( TF )-->
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+        <remap from="/joint_states" to="/rrbot/joint_states" />
+      </node>
+    
+    </launch>

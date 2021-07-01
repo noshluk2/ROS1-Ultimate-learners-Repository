@@ -1,0 +1,14 @@
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+arm1_a_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: arm1_a_joint
+    
+arm1_b_velocity_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: arm1_b_joint
+      
+
+

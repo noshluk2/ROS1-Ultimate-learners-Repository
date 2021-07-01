@@ -1,0 +1,19 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+arm1_position_interface:
+  type: position_controllers/JointGroupPositionController
+  joints: 
+    - arm1_a_joint
+    - arm1_b_joint
+arm2_velocity_interface:
+  type: velocity_controllers/JointGroupVelocityController
+  joints: 
+    - arm2_a_joint
+    - arm2_b_joint
+gains:
+  arm1_a_joint: {p: 10, i: 1, d: 1 }
+  arm2_a_joint: {p: 10, i: 1, d: 1 }
+  arm1_b_joint: {p: 10, i: 1, d: 1 }
+  arm2_b_joint: {p: 10, i: 1, d: 1 }
